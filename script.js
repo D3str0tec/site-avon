@@ -1,26 +1,33 @@
-function buscarProduto() {
-    const skuDigitado = document.getElementById("sku").value;
+let produtos = [];
 
-    // Base de dados simples (por enquanto)
-    const produtos = {
-        "50608475": {
-            nome: "AVON CARE CREME DEPILATORIO CORPO 125G",
-            ean: "7909189384266"
-        }
-    };
+/* =========================
+   CARREGAR CSV
+========================= */
+fetch("produtos.csv")
+  .then(response => response.text())
+  .then(texto => {
+    const linhas = texto.split("\n");
 
-    const resultado = document.getElementById("resultado");
+    for (let i = 1; i < linhas.length; i++) {
+      const linha = linhas[i].trim();
+      if (!linha) continue;
 
-    if (produtos[skuDigitado]) {
-        resultado.innerHTML = `
-            <h3>${produtos[skuDigitado].nome}</h3>
-            <p><strong>SKU:</strong> ${skuDigitado}</p>
-            <p><strong>EAN:</strong> ${produtos[skuDigitado].ean}</p>
-            <img 
-              src="https://barcode.tec-it.com/barcode.ashx?data=${produtos[skuDigitado].ean}&code=EAN13"
-              alt="Código de Barras">
-        `;
-    } else {
-        resultado.innerHTML = "<p>Produto não encontrado</p>";
+      const valores = linha.split(",");
+
+      produtos.push({
+        sku: valores[0]?.trim(),
+        ean: valores[1]?.trim(),
+        nome: valores[2]?.trim().toUpperCase()
+      });
     }
-}
+
+    console.log("Produtos carregados:", produtos.length);
+  })
+  .catch(err => console.error("Erro ao carregar CSV:", err));
+
+/* =========================
+   BUSCAR PRODUTO
+========================= */
+function buscarProduto() {
+  const termo = document
+    .getElementById("searc
