@@ -16,8 +16,8 @@ fetch("produtos.csv")
 
       produtos.push({
         sku: valores[0]?.trim(),
-        ean: valores[1]?.trim(),
-        nome: valores[2]?.trim().toUpperCase()
+        nome: valores[1]?.trim().toUpperCase(),
+        ean: valores[2]?.trim()
       });
     }
 
@@ -30,4 +30,42 @@ fetch("produtos.csv")
 ========================= */
 function buscarProduto() {
   const termo = document
-    .getElementById("searc
+    .getElementById("searchInput")
+    .value
+    .trim()
+    .toUpperCase();
+
+  if (!termo) {
+    alert("Digite um SKU, EAN ou nome");
+    return;
+  }
+
+  const produto = produtos.find(p =>
+    p.sku === termo ||
+    p.ean === termo ||
+    p.nome.includes(termo)
+  );
+
+  if (!produto) {
+    alert("Produto não encontrado");
+    return;
+  }
+
+  document.getElementById("nomeProduto").innerText = produto.nome;
+  document.getElementById("skuProduto").innerText = produto.sku;
+  document.getElementById("eanProduto").innerText = produto.ean;
+
+  gerarCodigoBarras(produto.ean || produto.sku);
+}
+
+/* =========================
+   CÓDIGO DE BARRAS
+========================= */
+function gerarCodigoBarras(valor) {
+  JsBarcode("#barcode", valor, {
+    format: "CODE128",
+    width: 2,
+    height: 80,
+    displayValue: true
+  });
+}
