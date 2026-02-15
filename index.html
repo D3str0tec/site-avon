@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Consulta de Produtos AVON</title>
+  <title>Consulta de Produtos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:,">
@@ -13,24 +14,29 @@
 <body>
 
   <div class="container">
-    <h1>Consulta de Produtos AVON</h1>
+    <h1>Consulta de Produtos</h1>
 
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Buscar por SKU, EAN ou nome do produto"
-    >
-
-    <button id="btnBuscar">🔍 Buscar</button>
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Buscar por SKU, EAN ou nome do produto"
+      >
+      <button id="btnBuscar">Buscar</button>
+    </div>
 
     <div class="resultado">
       <h3 id="nomeProduto"></h3>
 
-      <p><strong>SKU:</strong> <span id="skuProduto"></span></p>
-      <p><strong>EAN:</strong> <span id="eanProduto"></span></p>
+      <div class="info">
+        <p><strong>SKU:</strong> <span id="skuProduto"></span></p>
+        <p><strong>EAN:</strong> <span id="eanProduto"></span></p>
+      </div>
 
-      <p><strong>Código de barras (SKU)</strong></p>
-      <svg id="barcode"></svg>
+      <div class="barcode-area">
+        <p><strong>Código de Barras (SKU)</strong></p>
+        <svg id="barcode"></svg>
+      </div>
     </div>
   </div>
 
